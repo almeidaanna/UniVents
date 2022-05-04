@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //git check anna
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
