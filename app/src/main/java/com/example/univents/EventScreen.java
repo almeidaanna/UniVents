@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.univents.databinding.FragmentHomeBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -20,6 +21,7 @@ public class EventScreen extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityEventScreenBinding binding;
+    private FragmentHomeBinding homeBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
