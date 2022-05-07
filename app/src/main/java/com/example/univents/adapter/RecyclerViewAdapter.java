@@ -7,48 +7,55 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.example.univents.databinding.RvEventLayoutBinding;
+import com.example.univents.model.Event;
+
+import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapter.ViewHolder> {
-    private static List<CourseResult> courseResults;
+    private static ArrayList<Event> eventList;
 
-    public RecyclerViewAdapter(List<CourseResult> courseResults) {
-        this.courseResults = courseResults;
+    public RecyclerViewAdapter(ArrayList<Event> listOfEvents) {
+        eventList = listOfEvents;
     }
 
     //creates a new viewholder that is constructed with a new View, inflated from a layout
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RvLayoutBinding binding= RvLayoutBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        RvEventLayoutBinding binding = RvEventLayoutBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
         return new ViewHolder(binding);
     }
 
     // this method binds the view holder created with data that will be displayed
-    @Override public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder viewHolder, int position) {
-        final CourseResult unit = courseResults.get(position);
-        viewHolder.binding.tvRvunit.setText(unit.getUnit());
-        viewHolder.binding.tvRvmark.setText((Integer.toString(unit.getMark())));
-        viewHolder.binding.ivItemDelete.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder viewHolder, int position) {
+        final Event event = eventList.get(position);
+        viewHolder.binding.eventName.setText(event.getEventName());
+        viewHolder.binding.eventDate.setText(event.getEventDate());
+        viewHolder.binding.eventDay.setText(event.getEventDay());
+        viewHolder.binding.eventDetails.setText(event.getEventDetail());
+        viewHolder.binding.eventImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                courseResults.remove(unit);
-                notifyDataSetChanged();
+                System.out.println(event);
+                //notifyDataSetChanged();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return courseResults.size();
+        return eventList.size();
     }
 
-    public void addUnits(List<CourseResult> results) {
-        courseResults = results; notifyDataSetChanged();
+    public void addUnits(ArrayList<Event> events) {
+        eventList = events;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private RvLayoutBinding binding;
-        public ViewHolder(RvLayoutBinding binding){
+        private RvEventLayoutBinding binding;
+        public ViewHolder(RvEventLayoutBinding binding){
             super(binding.getRoot());
             this.binding = binding;
         }
