@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment" >
+    tools:context=".fragment.HomeFragment" >
 
     <TextView
         android:id="@+id/homeText"
@@ -24,8 +24,7 @@
         android:text="Select Month-Year"
         app:layout_constraintTop_toBottomOf="@id/homeText"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent"/>
     <TextView
         android:id="@+id/dateText"
         android:layout_width="wrap_content"
@@ -33,15 +32,12 @@
         app:layout_constraintTop_toBottomOf="@id/monthYearBtn"
         android:text="DATE"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dateText"
         android:layout_marginTop="20dp"
-        android:scrollbars="vertical"
-
-        />
+        android:scrollbars="vertical"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.univents.ui.home;
+package com.example.univents.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.univents.databinding.FragmentHomeBinding;
+import com.example.univents.ui.home.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
