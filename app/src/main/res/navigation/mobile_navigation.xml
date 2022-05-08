@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/navHelp"
         android:name="com.example.univents.fragment.HelpFragment"
-        android:label="fragment_help"
+        android:label="Help &amp; Support"
         tools:layout="@layout/fragment_help" />
     <fragment
         android:id="@+id/navHistory"
