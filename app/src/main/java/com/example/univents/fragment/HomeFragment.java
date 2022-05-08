@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.univents.EventScreen;
 import com.example.univents.adapter.RecyclerViewAdapter;
 import com.example.univents.databinding.FragmentHomeBinding;
 import com.example.univents.model.Event;
@@ -16,6 +20,7 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
+    private RecyclerView.LayoutManager layoutManager;
     private FragmentHomeBinding binding;
     private RecyclerViewAdapter adapter;
     private ArrayList<Event> events;
@@ -24,6 +29,15 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        events = new ArrayList<Event>();
+        events = Event.createEventList();
+        adapter = new RecyclerViewAdapter(events);
+        binding.eventList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        binding.eventList.setAdapter(adapter);
+        layoutManager = new LinearLayoutManager(this);
+        binding.eventList.setLayoutManager(layoutManager);
+
 
 
         return root;
