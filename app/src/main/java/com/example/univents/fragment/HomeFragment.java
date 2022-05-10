@@ -38,8 +38,6 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(this);
         binding.eventList.setLayoutManager(layoutManager);
 
-
-
         return root;
     }
 
