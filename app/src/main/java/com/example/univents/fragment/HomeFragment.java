@@ -29,16 +29,13 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         events = new ArrayList<Event>();
         events = Event.createEventList();
         adapter = new RecyclerViewAdapter(events);
-        binding.eventList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        binding.eventList.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         binding.eventList.setAdapter(adapter);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(getContext());
         binding.eventList.setLayoutManager(layoutManager);
-
-
 
         return root;
     }

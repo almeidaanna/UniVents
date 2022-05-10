@@ -65,6 +65,9 @@ public class Event {
         eventList.add(new Event("event1","12/2/22", "Monday", "This is a dance event and starts at 4:00 pm be there"));
         eventList.add(new Event("event2","13/2/22", "Tuesday", "This is a music event and starts at 4:00 pm be there"));
         eventList.add(new Event("event3","14/2/22", "Wednesday", "This is a fashion event and starts at 4:00 pm be there"));
+        eventList.add(new Event("event4","15/2/22", "Thursday", "This is a dance event and starts at 4:00 pm be there"));
+        eventList.add(new Event("event5","16/2/22", "Friday", "This is a music event and starts at 4:00 pm be there"));
+        eventList.add(new Event("event6","17/2/22", "Saturday", "This is a fashion event and starts at 4:00 pm be there"));
         return eventList;
     }
 }
