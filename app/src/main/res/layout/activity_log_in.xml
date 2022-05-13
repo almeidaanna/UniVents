@@ -99,6 +99,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="Continue with FaceBook"
+
         />
     <Button
         android:id="@+id/googleButton"
@@ -116,4 +117,5 @@
         android:layout_marginRight="80dp"
         android:text="Create Account"
         />
+
 </LinearLayout>
