@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UniVents">
         <activity
+            android:name=".EventConfirmActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateAccount"
             android:exported="false" />
         <activity
@@ -25,8 +28,8 @@
             android:theme="@style/Theme.UniVents.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.UniVents.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.UniVents.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
