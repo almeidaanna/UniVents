@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/eventCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -10,6 +11,7 @@
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="3dp"
     card_view:contentPadding="4dp" >
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,8 +25,7 @@
             android:src="@drawable/eventicon"
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            />
+            card_view:layout_constraintBottom_toBottomOf="parent"/>
         <TextView
             android:id="@+id/eventName"
             android:layout_width="wrap_content"
@@ -33,8 +34,7 @@
             android:layout_margin="8dp"
             card_view:layout_constraintLeft_toRightOf="@id/eventImage"
             card_view:layout_constraintTop_toTopOf="parent"
-            android:text="Event Name"
-            />
+            android:text="Event Name"/>
         <TextView
             android:id="@+id/eventDate"
             android:layout_width="wrap_content"
@@ -43,8 +43,7 @@
             android:layout_margin="8dp"
             card_view:layout_constraintLeft_toRightOf="@id/eventImage"
             card_view:layout_constraintTop_toBottomOf="@id/eventName"
-            android:text="Event Date"
-            />
+            android:text="Event Date"/>
         <TextView
             android:id="@+id/eventDay"
             android:layout_width="wrap_content"
@@ -53,8 +52,7 @@
             android:layout_margin="8dp"
             card_view:layout_constraintLeft_toRightOf="@id/eventDate"
             card_view:layout_constraintTop_toBottomOf="@id/eventName"
-            android:text="Event Day"
-            />
+            android:text="Event Day"/>
         <TextView
             android:id="@+id/eventDetails"
             android:layout_width="wrap_content"
@@ -63,8 +61,7 @@
             android:layout_margin="8dp"
             card_view:layout_constraintLeft_toRightOf="@id/eventImage"
             card_view:layout_constraintTop_toBottomOf="@id/eventDate"
-            android:text="Event Details"
-            />
+            android:text="Event Details"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

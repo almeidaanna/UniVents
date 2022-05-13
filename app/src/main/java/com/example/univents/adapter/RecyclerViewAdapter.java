@@ -1,12 +1,18 @@
 package com.example.univents.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.univents.EventRegisterActivity;
+import com.example.univents.EventScreen;
+import com.example.univents.MainActivity;
 import com.example.univents.databinding.RvEventLayoutBinding;
 import com.example.univents.model.Event;
 
@@ -55,9 +61,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private RvEventLayoutBinding binding;
+        private final Context context;
+
         public ViewHolder(RvEventLayoutBinding binding){
             super(binding.getRoot());
+            View view = binding.getRoot();
+            context = view.getContext();
             this.binding = binding;
+            binding.eventCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+            //        int position = getAbsoluteAdapterPosition();
+          //          Toast.makeText(view.getContext(), "Select" + (position+1), Toast.LENGTH_SHORT).show();
+                    final Intent intent = new Intent(context, EventRegisterActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
