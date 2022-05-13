@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.univents.adapter.RecyclerViewAdapter;
+import com.example.univents.databinding.ActivityMainBinding;
 import com.example.univents.databinding.FragmentHomeBinding;
+import com.example.univents.model.Event;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -16,13 +19,20 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.univents.databinding.ActivityEventScreenBinding;
 
+import java.util.ArrayList;
+
 public class EventScreen extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
     private ActivityEventScreenBinding binding;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerViewAdapter adapter;
+    private ArrayList<Event> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,46 +41,12 @@ public class EventScreen extends AppCompatActivity {
         binding = ActivityEventScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        setSupportActionBar(binding.appBarEventScreen.toolbar);
-    /*    binding.appBarEventScreen.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView; */
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navHome,
-                R.id.navFeed,
-                R.id.navHistory,
-                R.id.navHelp,
-                R.id.navLogout,
-                R.id.navProfile)
-                .setOpenableLayout(binding.drawerLayout)
-                .build();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        NavHostFragment navHostFragment = (NavHostFragment) fragmentManager.findFragmentById((R.id.nav_host_fragment_content_event_screen));
-
-        NavController navController = navHostFragment.getNavController();
-        NavigationUI.setupWithNavController(binding.navView, navController);
-        NavigationUI.setupWithNavController(binding.appBarEventScreen.toolbar, navController, mAppBarConfiguration);
+        events = new ArrayList<Event>();
+        events = Event.createEventList();
+        adapter = new RecyclerViewAdapter(events);
+        binding.eventList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        binding.eventList.setAdapter(adapter);
+        layoutManager = new LinearLayoutManager(this);
+        binding.eventList.setLayoutManager(layoutManager);
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.event_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_event_screen);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    } */
 }

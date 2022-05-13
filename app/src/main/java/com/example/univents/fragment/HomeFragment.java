@@ -1,5 +1,6 @@
 package com.example.univents.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,23 +21,19 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView.LayoutManager layoutManager;
     private FragmentHomeBinding binding;
-    private RecyclerViewAdapter adapter;
-    private ArrayList<Event> events;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        events = new ArrayList<Event>();
-        events = Event.createEventList();
-        adapter = new RecyclerViewAdapter(events);
-        binding.eventList.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        binding.eventList.setAdapter(adapter);
-        layoutManager = new LinearLayoutManager(getContext());
-        binding.eventList.setLayoutManager(layoutManager);
-
+        binding.culturalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EventScreen.class);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 
