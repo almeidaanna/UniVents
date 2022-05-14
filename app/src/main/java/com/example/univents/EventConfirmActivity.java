@@ -24,7 +24,6 @@ public class EventConfirmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
 
@@ -33,7 +32,6 @@ public class EventConfirmActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
-
 
         binding = ActivityEventConfirmBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -66,5 +64,4 @@ public class EventConfirmActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
