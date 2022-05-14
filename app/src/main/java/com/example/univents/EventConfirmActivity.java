@@ -14,12 +14,14 @@ public class EventConfirmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_confirm);
+
         binding = ActivityEventConfirmBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
         binding.calendarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                Toast.makeText(view.getContext(), "Add to calendar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Added to calendar", Toast.LENGTH_SHORT).show();
             }
         });
     }
