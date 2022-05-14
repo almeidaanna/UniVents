@@ -33,7 +33,7 @@ public class LogInActivity extends AppCompatActivity {
                 userPassword = binding.password.getText().toString().trim();
                 if (!userName.endsWith(".student.edu") || !userName.contains("@") || userName.isEmpty())
                     Toast.makeText(view.getContext(),"Invalid EmailID", Toast.LENGTH_SHORT).show();
-                if(userPassword.isEmpty()||userPassword.length()<8)
+                else if(userPassword.isEmpty()||userPassword.length()<8)
                     Toast.makeText(view.getContext(),"Invalid Password", Toast.LENGTH_SHORT).show();
                 else
                 {

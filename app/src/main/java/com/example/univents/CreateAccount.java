@@ -40,15 +40,15 @@ public class CreateAccount extends AppCompatActivity {
                 userConfirmPassword = binding.passwordId.getText().toString().trim();
                 if(userFName.isEmpty()|| isStringNumeric(userFName) )
                     Toast.makeText(view.getContext(),"Incorrect Name", Toast.LENGTH_SHORT).show();
-                if(userLName.isEmpty()|| isStringNumeric(userLName) )
+                else if(userLName.isEmpty()|| isStringNumeric(userLName) )
                     Toast.makeText(view.getContext(),"Incorrect Name", Toast.LENGTH_SHORT).show();
-                if(userPhone.isEmpty() || !isStringNumeric(userPhone)|| userPhone.length() < 10 || userPhone.length() > 10)
+                else if(userPhone.isEmpty() || !isStringNumeric(userPhone)|| userPhone.length() < 10 || userPhone.length() > 10)
                     Toast.makeText(view.getContext(),"Incorrect Phone number", Toast.LENGTH_SHORT).show();
-                if (!userName.endsWith(".student.edu") || !userName.contains("@") || userName.isEmpty())
+                else if (!userName.endsWith(".student.edu") || !userName.contains("@") || userName.isEmpty())
                     Toast.makeText(view.getContext(),"Invalid EmailID", Toast.LENGTH_SHORT).show();
-                if(userPassword.isEmpty()||userPassword.length()<8)
+                else if(userPassword.isEmpty()||userPassword.length()<8)
                     Toast.makeText(view.getContext(),"Invalid Password", Toast.LENGTH_SHORT).show();
-                if(!userConfirmPassword.equals(userPassword))
+                else if(!userConfirmPassword.equals(userPassword))
                     Toast.makeText(view.getContext(),"Invalid Password", Toast.LENGTH_SHORT).show();
                 else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
