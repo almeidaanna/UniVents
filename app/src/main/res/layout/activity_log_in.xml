@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="enter password"
-            android:password="true"/>
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <TextView
@@ -82,7 +82,8 @@
         android:clickable="true"
         android:text="Forgot password?"
         android:background="?attr/selectableItemBackground"
-        android:textAlignment="center" />
+        android:layout_marginRight="15dp"
+        android:gravity="right" />
 
     <Button
         android:id="@+id/loginButton"
