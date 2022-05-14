@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,8 @@ public class EventConfirmActivity extends AppCompatActivity {
         binding = ActivityEventConfirmBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Intent intent = getIntent();
+        binding.eventName.setText(intent.getStringExtra("Event"));
         final Point point = Point.fromLngLat(145.045837, -37.876823 );
         mapView = findViewById(R.id.mapView);
         CameraOptions cameraPosition = new CameraOptions.Builder()

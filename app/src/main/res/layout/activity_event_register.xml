@@ -14,14 +14,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
-
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Event Name"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/eventIcon"
+        app:layout_constraintLeft_toRightOf="@id/dateLayout" />
     <LinearLayout
         android:id="@+id/dateLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp"
-        app:layout_constraintTop_toBottomOf="@id/eventIcon"
+        app:layout_constraintTop_toBottomOf="@id/eventName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
@@ -38,10 +46,33 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/dayLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="5dp"
         app:layout_constraintTop_toBottomOf="@id/dateLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Day:"/>
+        <TextView
+            android:id="@+id/dayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Monday"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/dayLayout"
         app:layout_constraintRight_toRightOf="parent"
         android:padding="5dp">
 
@@ -53,7 +84,8 @@
             android:id="@+id/timeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11:52 PM"/>
+            android:text="11:52 PM"
+            android:padding="10dp"/>
     </LinearLayout>
 
     <TextView
@@ -62,17 +94,17 @@
         android:layout_height="wrap_content"
         android:text="Event Details"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateLayout"/>
+        app:layout_constraintTop_toBottomOf="@id/timeLayout"
+        android:padding="5dp"/>
 
     <TextView
         android:id="@+id/detailInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is a dance event and starts at 4:00 pm be there"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="This is a dance event"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailText"/>
+        app:layout_constraintTop_toBottomOf="@id/detailText"
+        android:layout_margin="10dp"/>
 
     <Button
         android:id="@+id/registerButton"
