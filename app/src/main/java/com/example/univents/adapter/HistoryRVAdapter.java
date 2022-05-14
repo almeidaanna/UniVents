@@ -1,8 +1,6 @@
 package com.example.univents.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.univents.EventRegisterActivity;
 import com.example.univents.databinding.RvEventLayoutBinding;
 import com.example.univents.model.Event;
 
@@ -53,18 +50,7 @@ public class HistoryRVAdapter extends RecyclerView.Adapter <HistoryRVAdapter.Vie
             View view = binding.getRoot();
             context = view.getContext();
             this.binding = binding;
-//            binding.eventCard.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAbsoluteAdapterPosition();
-//                    //        Toast.makeText(view.getContext(), "Select" + (position+1), Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(context, EventRegisterActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putParcelable("Event" ,eventList.get(getAbsoluteAdapterPosition()));
-//                    intent.putExtras(bundle);
-//                    context.startActivity(intent);
-//                }
-//            });
+            binding.eventCard.setClickable(false);
         }
     }
 }
