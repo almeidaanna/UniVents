@@ -79,7 +79,8 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="enter your Phone Number"/>
+            android:hint="enter your Phone Number"
+            android:inputType="phone"/>
     </LinearLayout>
 
     <LinearLayout
