@@ -10,6 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Thank you" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_gravity="center_horizontal"/>
+
     <Button
         android:id="@+id/loginButton2"
         android:layout_width="wrap_content"

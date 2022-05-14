@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.univents.LogInActivity;
 import com.example.univents.R;
 import com.example.univents.databinding.FragmentLogOutBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +24,7 @@ import com.example.univents.databinding.FragmentLogOutBinding;
 public class LogOutFragment extends Fragment {
 
     private FragmentLogOutBinding binding;
+    private FirebaseAuth mAuth;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +60,7 @@ public class LogOutFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -69,6 +72,12 @@ public class LogOutFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentLogOutBinding.inflate(inflater, container, false );
         View root = binding.getRoot();
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+            }
+        });
         binding.loginButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

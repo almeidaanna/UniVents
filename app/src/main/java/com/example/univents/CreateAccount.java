@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,11 @@ import android.widget.Toast;
 
 import com.example.univents.databinding.ActivityCreateAccountBinding;
 import com.example.univents.databinding.ActivityLogInBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +35,17 @@ public class CreateAccount extends AppCompatActivity {
     private String userPassword;
     private String userConfirmPassword;
     private String userUniversity;
+    private FirebaseAuth mAuth;
+
+    private static final String TAG = "CreateAccount";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // initialise Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -45,8 +56,7 @@ public class CreateAccount extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-        binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
+                binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         List<String> list = new ArrayList<String>();
@@ -57,6 +67,20 @@ public class CreateAccount extends AppCompatActivity {
         list.add("University of Melbourne");
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this ,android.R.layout.simple_spinner_item, list);
         binding.universitySpinner.setAdapter(spinnerAdapter);
+        binding.universitySpinner.setPrompt("Select University");
+
+        binding.clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.firstNameId.setText("");
+                binding.lastNameId.setText("");
+                binding.phoneId.setText("");
+                binding.emailId.setText("");
+                binding.passwordId.setText("");
+                binding.confirmPasswordId.setText("");
+                binding.universitySpinner.setSelection(0);
+            }
+        });
         binding.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,26 +91,61 @@ public class CreateAccount extends AppCompatActivity {
                 userName = binding.emailId.getText().toString().trim();
                 userPassword = binding.passwordId.getText().toString().trim();
                 userConfirmPassword = binding.passwordId.getText().toString().trim();
-
+                userUniversity = binding.universitySpinner.getSelectedItem().toString();
                 if(userFName.isEmpty()|| isStringNumeric(userFName) )
                     Toast.makeText(view.getContext(),"Incorrect Name", Toast.LENGTH_SHORT).show();
                 else if(userLName.isEmpty()|| isStringNumeric(userLName) )
                     Toast.makeText(view.getContext(),"Incorrect Name", Toast.LENGTH_SHORT).show();
                 else if(userPhone.isEmpty() || !isStringNumeric(userPhone)|| userPhone.length() < 10 || userPhone.length() > 10)
                     Toast.makeText(view.getContext(),"Incorrect Phone number", Toast.LENGTH_SHORT).show();
-                else if (!userName.endsWith(".edu") || !userName.contains("@") || userName.isEmpty())
+                else if (!userName.contains(".edu") || !userName.contains("@")|| !userName.contains("student")||userName.isEmpty())
                     Toast.makeText(view.getContext(),"Invalid EmailID", Toast.LENGTH_SHORT).show();
-                else if(userPassword.isEmpty()||userPassword.length()<8)
+                else if(userPassword.isEmpty()||userPassword.length()<8||!userPassword.matches(".*[0-9].*"))
                     Toast.makeText(view.getContext(),"Invalid Password", Toast.LENGTH_SHORT).show();
                 else if(!userConfirmPassword.equals(userPassword))
                     Toast.makeText(view.getContext(),"Invalid Password", Toast.LENGTH_SHORT).show();
+                else if(userUniversity.equals("Select University"))
+                    Toast.makeText(view.getContext(),"Invalid University", Toast.LENGTH_SHORT).show();
                 else {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                    createAccount();
                 }
             }
         });
     }
+
+    private void createAccount(){
+        mAuth.createUserWithEmailAndPassword(userName, userPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            Toast.makeText(CreateAccount.this, "Log In Successful",
+                                    Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(CreateAccount.this, task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if(user != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+        else {
+            //
+        }
+    }
+
     public static boolean isStringNumeric(String word)
     {
         boolean flag = true;

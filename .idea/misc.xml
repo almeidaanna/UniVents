@@ -5,14 +5,14 @@
       <map>
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2495" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/drawable/side_nav_bar.xml" value="0.2265" />
-        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_event_confirm.xml" value="0.25" />
-        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_event_register.xml" value="0.2" />
+        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_create_account.xml" value="0.25416666666666665" />
+        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_event_confirm.xml" value="0.25416666666666665" />
+        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_event_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_event_screen.xml" value="0.22826086956521738" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_log_in.xml" value="0.25416666666666665" />
-        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/app_bar_event_screen.xml" value="0.22826086956521738" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/app_bar_main.xml" value="0.22826086956521738" />
-        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/app_bar_main_screen.xml" value="0.25" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/content_event_screen.xml" value="0.22826086956521738" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/content_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/fragment_date_picker.xml" value="0.11302083333333333" />
@@ -24,12 +24,9 @@
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/nav_header_event_screen.xml" value="0.11302083333333333" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/nav_header_main.xml" value="0.22826086956521738" />
-        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/nav_header_main_screen.xml" value="0.25" />
-        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/navigation_header_main.xml" value="0.25" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/layout/rv_event_layout.xml" value="0.4" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
         <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/menu/event_screen.xml" value="0.25416666666666665" />
-        <entry key="..\:/Monash/FIT5046/univents/app/src/main/res/menu/navigaion_menu.xml" value="0.25" />
       </map>
     </option>
   </component>
