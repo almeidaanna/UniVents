@@ -3,19 +3,19 @@ package com.example.univents;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.univents.databinding.ActivityCreateAccountBinding;
-import com.example.univents.databinding.ActivityLogInBinding;
+import com.example.univents.model.Student;
+import com.example.univents.viewmodel.StudentViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,18 +24,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CreateAccount extends AppCompatActivity {
     private ActivityCreateAccountBinding binding;
     private String userFName;
     private String userLName;
     private String userPhone;
-    private String userName;
+    private String userEmail;
     private String userPassword;
     private String userConfirmPassword;
     private String userUniversity;
     private FirebaseAuth mAuth;
+    private StudentViewModel studentViewModel;
 
     private static final String TAG = "CreateAccount";
 
@@ -65,6 +65,7 @@ public class CreateAccount extends AppCompatActivity {
         list.add("RMIT");
         list.add("La Trobe University");
         list.add("University of Melbourne");
+
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this ,android.R.layout.simple_spinner_item, list);
         binding.universitySpinner.setAdapter(spinnerAdapter);
         binding.universitySpinner.setPrompt("Select University");
@@ -81,14 +82,15 @@ public class CreateAccount extends AppCompatActivity {
                 binding.universitySpinner.setSelection(0);
             }
         });
+
         binding.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                userFName = binding.firstNameId.getText().toString().trim().toLowerCase();
-                userLName = binding.lastNameId.getText().toString().trim().toLowerCase();
+                userFName = binding.firstNameId.getText().toString().trim();
+                userLName = binding.lastNameId.getText().toString().trim();
                 userPhone = binding.phoneId.getText().toString().trim();
-                userName = binding.emailId.getText().toString().trim();
+                userEmail = binding.emailId.getText().toString().trim();
                 userPassword = binding.passwordId.getText().toString().trim();
                 userConfirmPassword = binding.passwordId.getText().toString().trim();
                 userUniversity = binding.universitySpinner.getSelectedItem().toString();
@@ -98,7 +100,7 @@ public class CreateAccount extends AppCompatActivity {
                     Toast.makeText(view.getContext(),"Incorrect Name", Toast.LENGTH_SHORT).show();
                 else if(userPhone.isEmpty() || !isStringNumeric(userPhone)|| userPhone.length() < 10 || userPhone.length() > 10)
                     Toast.makeText(view.getContext(),"Incorrect Phone number", Toast.LENGTH_SHORT).show();
-                else if (!userName.contains(".edu") || !userName.contains("@")|| !userName.contains("student")||userName.isEmpty())
+                else if (!userEmail.contains(".edu") || !userEmail.contains("@")|| !userEmail.contains("student")|| userEmail.isEmpty())
                     Toast.makeText(view.getContext(),"Invalid EmailID", Toast.LENGTH_SHORT).show();
                 else if(userPassword.isEmpty()||userPassword.length()<8||!userPassword.matches(".*[0-9].*"))
                     Toast.makeText(view.getContext(),"Invalid Password", Toast.LENGTH_SHORT).show();
@@ -107,33 +109,36 @@ public class CreateAccount extends AppCompatActivity {
                 else if(userUniversity.equals("Select University"))
                     Toast.makeText(view.getContext(),"Invalid University", Toast.LENGTH_SHORT).show();
                 else {
-                    createAccount();
+                    Student student = new Student(userFName, userLName, userPhone, userEmail, userPassword, userUniversity);
+                    createAccount(student);
                 }
             }
         });
     }
 
-    private void createAccount(){
-        mAuth.createUserWithEmailAndPassword(userName, userPassword)
+    private void createAccount(Student student){
+        mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            Toast.makeText(CreateAccount.this, "Log In Successful",
-                                    Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(CreateAccount.this, task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success");
+                    Toast.makeText(CreateAccount.this, "Log In Successful",
+                            Toast.LENGTH_SHORT).show();
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(StudentViewModel.class);
+                    studentViewModel.insert(student);
+                    updateUI(user);
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                    Toast.makeText(CreateAccount.this, task.getException().getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                }
+            }
+        });
     }
 
     private void updateUI(FirebaseUser user) {

@@ -3,59 +3,60 @@ package com.example.univents.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+@Entity
 public class Event implements Parcelable {
+    @PrimaryKey (autoGenerate = true)
+    private int eventId;
     private String eventCategory;
     private int eventCategoryID;
     private String eventName;
     private String eventDate;
+
     private String eventDay;
     private String eventDetail;
     private String eventTime;
     private double latitude;
     private double longitude;
-    public static HashMap<String, Integer> categoryType = new HashMap<String, Integer>() {{
+    @Ignore
+    public static final HashMap<String, Integer> categoryType = new HashMap<String, Integer>() {{
         put("CULTURAL", 1);
         put("RELIGIOUS", 2);
         put("SPORT", 3);
         put("EDUCATIONAL", 4);
-    }};
+    }};;
 
-    public Event(String category, String name, String date, String day, String detail, String time,double latitude, double longitude) {
-        eventCategory = category;
-        eventCategoryID = categoryType.get(category.toUpperCase());
-        eventName = name;
-        eventDate = date;
-        eventDay = day;
-        eventDetail = detail;
-        eventTime = time;
+    public Event(String eventCategory, int eventCategoryID, String eventName, String eventDate, String eventDay, String eventDetail, String eventTime, double latitude, double longitude) {
+        this.eventCategory = eventCategory;
+        this.eventCategoryID = eventCategoryID;
+        this.eventName = eventName;
+        this.eventDate = eventDate;
+        this.eventDay = eventDay;
+        this.eventDetail = eventDetail;
+        this.eventTime = eventTime;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+
 //    public HashMap getCategoryType() { return categoryType; }
 
-    public String getEventTime() {
-        return eventTime;
-    }
-
-    public void setEventTime(String eventTime) {
-        this.eventTime = eventTime;
-    }
-
-    public String getEventCategory() {
-        return eventCategory;
-    }
-
-    public void setEventCategory(String eventCategory) {
-        this.eventCategory = eventCategory;
-    }
 
     protected Event(Parcel in) {
+        eventId = in.readInt();
         eventCategory = in.readString();
+        eventCategoryID = in.readInt();
         eventName = in.readString();
         eventDate = in.readString();
         eventDay = in.readString();
@@ -76,6 +77,34 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+
+    public void setEventCategoryID(int eventCategoryID) {
+        this.eventCategoryID = eventCategoryID;
+    }
+
+    public String getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(String eventTime) {
+        this.eventTime = eventTime;
+    }
+
+    public String getEventCategory() {
+        return eventCategory;
+    }
+
+    public void setEventCategory(String eventCategory) {
+        this.eventCategory = eventCategory;
+    }
 
     public double getLatitude() {
         return latitude;
@@ -145,21 +174,21 @@ public class Event implements Parcelable {
     public static ArrayList<Event> createEventList()
     {
         ArrayList<Event> eventList = new ArrayList<Event>();
-        eventList.add(new Event("Cultural","Event 1","12/2/2022", "Monday", "This is a dance event ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
-        eventList.add(new Event("Cultural","Event 2","13/2/2022", "Tuesday", "This is a music event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
-        eventList.add(new Event("Cultural","Event 3","14/2/2022", "Wednesday", "This is a fashion event ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
-        eventList.add(new Event("Cultural","Event 4","15/2/2022", "Thursday", "This is a dance event ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Cultural","Event 5","16/2/2022", "Friday", "This is a music event ","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
-        eventList.add(new Event("Cultural","Event 6","17/2/2022", "Saturday", "This is a fashion event ","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Religious","Event 1","18/2/2022", "Monday", "This is a mythology quiz ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
-        eventList.add(new Event("Religious","Event 2","19/2/2022", "Tuesday", "This is a carol singing event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
-        eventList.add(new Event("Sport","Event 1","20/2/2022", "Wednesday", "This is a Badminton ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
-        eventList.add(new Event("Sport","Event 2","15/3/2022", "Thursday", "This is a Cricket ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Sport","Event 3","20/3/2022", "Wednesday", "This is a Soccer","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
-        eventList.add(new Event("Sport","Event 4","15/5/2022", "Thursday", "This is a Hockey","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Educational","Event 1","19/2/2022", "Thursday", "This is a Science Quiz","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Educational","Event 2","25/3/2022", "Friday", "This is a Hackathon","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
-        eventList.add(new Event("Educational","Event 3","17/3/2022", "Saturday", "This is a RoboWars","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Cultural",1,"Event 1","12/2/2022", "Monday", "This is a dance event ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
+        eventList.add(new Event("Cultural",1,"Event 2","13/2/2022", "Tuesday", "This is a music event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
+        eventList.add(new Event("Cultural",1,"Event 3","14/2/2022", "Wednesday", "This is a fashion event ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
+        eventList.add(new Event("Cultural",1,"Event 4","15/2/2022", "Thursday", "This is a dance event ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Cultural",1,"Event 5","16/2/2022", "Friday", "This is a music event ","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
+        eventList.add(new Event("Cultural",1,"Event 6","17/2/2022", "Saturday", "This is a fashion event ","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Religious",2,"Event 1","18/2/2022", "Monday", "This is a mythology quiz ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
+        eventList.add(new Event("Religious",2,"Event 2","19/2/2022", "Tuesday", "This is a carol singing event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
+        eventList.add(new Event("Sport",3,"Event 1","20/2/2022", "Wednesday", "This is a Badminton ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
+        eventList.add(new Event("Sport",3,"Event 2","15/3/2022", "Thursday", "This is a Cricket ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Sport",3,"Event 3","20/3/2022", "Wednesday", "This is a Soccer","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
+        eventList.add(new Event("Sport",3,"Event 4","15/5/2022", "Thursday", "This is a Hockey","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Educational",4,"Event 1","19/2/2022", "Thursday", "This is a Science Quiz","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Educational",4,"Event 2","25/3/2022", "Friday", "This is a Hackathon","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
+        eventList.add(new Event("Educational",4,"Event 3","17/3/2022", "Saturday", "This is a RoboWars","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
 
         return eventList;
     }
@@ -180,7 +209,9 @@ public class Event implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(eventId);
         parcel.writeString(eventCategory);
+        parcel.writeInt(eventCategoryID);
         parcel.writeString(eventName);
         parcel.writeString(eventDate);
         parcel.writeString(eventDay);

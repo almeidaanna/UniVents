@@ -1,18 +1,13 @@
 package com.example.univents;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.univents.adapter.HistoryRVAdapter;
 import com.example.univents.databinding.ActivityReportBinding;
-import com.example.univents.databinding.FragmentHistoryBinding;
 import com.example.univents.model.Event;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -28,7 +23,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class ReportActivity extends AppCompatActivity {
 

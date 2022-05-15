@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
-    android:paddingTop="100dp"
-    android:orientation="vertical"
-    android:id="@+id/profileLayout"
-    tools:context=".fragment.ProfileFragment">
+    tools:context=".ProfileActivity"
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:id="@+id/fNameLayout"
@@ -128,18 +126,12 @@
             android:gravity="center"
             android:layout_margin="8dp"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="8dp"
-        android:text="All Data"/>
-    <TextView
-        android:id="@+id/allData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="8dp"
-        android:text=""/>
+        android:backgroundTint="#FF0000"
+        android:text="Delete Account" />
 
 </LinearLayout>

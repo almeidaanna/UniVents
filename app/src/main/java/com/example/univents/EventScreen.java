@@ -76,7 +76,7 @@ public class EventScreen extends AppCompatActivity {
         for(Event event : Event.createEventList())
         {
             if (event.getEventCategory().equals(category))
-                    events.add(event);
+                events.add(event);
         }
 
         binding.clearBtn.setOnClickListener(new View.OnClickListener() {
