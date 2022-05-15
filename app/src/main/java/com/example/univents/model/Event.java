@@ -132,21 +132,21 @@ public class Event implements Parcelable {
     public static ArrayList<Event> createEventList()
     {
         ArrayList<Event> eventList = new ArrayList<Event>();
-        eventList.add(new Event("Cultural","Event 1","12/2/22", "Monday", "This is a dance event ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
-        eventList.add(new Event("Cultural","Event 2","13/2/22", "Tuesday", "This is a music event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
-        eventList.add(new Event("Cultural","Event 3","14/2/22", "Wednesday", "This is a fashion event ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
-        eventList.add(new Event("Cultural","Event 4","15/2/22", "Thursday", "This is a dance event ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Cultural","Event 5","16/2/22", "Friday", "This is a music event ","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
-        eventList.add(new Event("Cultural","Event 6","17/2/22", "Saturday", "This is a fashion event ","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Religious","Event 1","18/2/22", "Monday", "This is a mythology quiz ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
-        eventList.add(new Event("Religious","Event 2","19/2/22", "Tuesday", "This is a carol singing event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
-        eventList.add(new Event("Sport","Event 1","20/2/22", "Wednesday", "This is a Badminton ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
-        eventList.add(new Event("Sport","Event 2","15/3/22", "Thursday", "This is a Cricket ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Sport","Event 3","20/3/22", "Wednesday", "This is a Soccer","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
-        eventList.add(new Event("Sport","Event 4","15/5/22", "Thursday", "This is a Hockey","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Educational","Event 1","19/2/22", "Thursday", "This is a Science Quiz","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
-        eventList.add(new Event("Educational","Event 2","25/3/22", "Friday", "This is a Hackathon","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
-        eventList.add(new Event("Educational","Event 3","17/3/22", "Saturday", "This is a RoboWars","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Cultural","Event 1","12/2/2022", "Monday", "This is a dance event ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
+        eventList.add(new Event("Cultural","Event 2","13/2/2022", "Tuesday", "This is a music event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
+        eventList.add(new Event("Cultural","Event 3","14/2/2022", "Wednesday", "This is a fashion event ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
+        eventList.add(new Event("Cultural","Event 4","15/2/2022", "Thursday", "This is a dance event ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Cultural","Event 5","16/2/2022", "Friday", "This is a music event ","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
+        eventList.add(new Event("Cultural","Event 6","17/2/2022", "Saturday", "This is a fashion event ","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Religious","Event 1","18/2/2022", "Monday", "This is a mythology quiz ","11:45 AM",-37.918147, 145.168427)); //-37.918147, 145.168427
+        eventList.add(new Event("Religious","Event 2","19/2/2022", "Tuesday", "This is a carol singing event ","3:40 PM",-37.55053 ,145.10063)); //37°55'05.3"S 145°10'06.3"E
+        eventList.add(new Event("Sport","Event 1","20/2/2022", "Wednesday", "This is a Badminton ","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
+        eventList.add(new Event("Sport","Event 2","15/3/2022", "Thursday", "This is a Cricket ","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Sport","Event 3","20/3/2022", "Wednesday", "This is a Soccer","4:30 PM",-37.915624, 145.159303)); //-37.915624, 145.159303
+        eventList.add(new Event("Sport","Event 4","15/5/2022", "Thursday", "This is a Hockey","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Educational","Event 1","19/2/2022", "Thursday", "This is a Science Quiz","12:55PM",-37.914879, 145.156095)); //-37.914879, 145.156095
+        eventList.add(new Event("Educational","Event 2","25/3/2022", "Friday", "This is a Hackathon","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
+        eventList.add(new Event("Educational","Event 3","17/3/2022", "Saturday", "This is a RoboWars","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
 
         return eventList;
     }

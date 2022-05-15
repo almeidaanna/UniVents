@@ -16,4 +16,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mapbox_access_token">pk.eyJ1Ijoic2phaTAwMjQiLCJhIjoiY2wzNTAya3ZjMnk1NDNjcGY2YjhyZXl5dSJ9.XnfCTme_RCSrTb-QJ7_Lug</string>
+
+
+    <string name="date_label_set">Press the button to set the date</string>
+    <string name="date_button_set">Set Date</string>
+    <string name="date_view_set">The Date is: </string>
+    <string name="date_selected"></string>
+
+
 </resources>
