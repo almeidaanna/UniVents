@@ -1,5 +1,6 @@
 package com.example.univents;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,8 +41,13 @@ public class EventScreen extends AppCompatActivity {
         binding = ActivityEventScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Intent intent = getIntent();
+        String category = intent.getStringExtra("Category");
         events = new ArrayList<Event>();
-        events = Event.createEventList();
+        //events = Event.createEventList();
+        for(Event event : Event.createEventList())
+            if (event.getEventCategory().equals(category))
+                events.add(event);
         adapter = new RecyclerViewAdapter(events);
         binding.eventList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         binding.eventList.setAdapter(adapter);

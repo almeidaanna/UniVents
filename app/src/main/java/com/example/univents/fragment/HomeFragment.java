@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EventScreen.class);
+                intent.putExtra("Category","Cultural");
                 startActivity(intent);
             }
         });
