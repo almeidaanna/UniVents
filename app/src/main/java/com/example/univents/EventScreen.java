@@ -3,6 +3,7 @@ package com.example.univents;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.univents.adapter.RecyclerViewAdapter;
 import com.example.univents.databinding.ActivityEventScreenBinding;
 import com.example.univents.model.Event;
+import com.example.univents.viewmodel.EventViewModel;
+import com.example.univents.viewmodel.StudentViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class EventScreen extends AppCompatActivity {
 
@@ -35,6 +42,8 @@ public class EventScreen extends AppCompatActivity {
     private Calendar calendar;
     private TextView dateView;
     private int year, month, day;
+    private EventViewModel eventViewModel;
+    private boolean addNewEvents = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +78,40 @@ public class EventScreen extends AppCompatActivity {
         clearDate();
 
         Intent intent = getIntent();
-        String category = intent.getStringExtra("Category");
+        int category = intent.getIntExtra("Category", 2);
         events = new ArrayList<Event>();
         filteredEvents = new ArrayList<Event>();
-        //events = Event.createEventList();
-        for(Event event : Event.createEventList())
-        {
-            if (event.getEventCategory().equals(category))
-                events.add(event);
-        }
+
+        eventViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(EventViewModel.class);
+        eventViewModel.getAllEventsByCategory(category).observe(this, new Observer<List<Event>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onChanged(List<Event> eventList) {
+                if (eventList.size() == 0){
+                    Toast.makeText(EventScreen.this, "Populating events.", Toast.LENGTH_SHORT).show();
+                    addNewEvents = true;
+                    if(addNewEvents){
+                        for (Event e: Event.createEventList()) {
+                            if(e.getEventCategoryID() == category){
+                                eventViewModel.insert(e);
+                            }
+                        }
+                        addNewEvents = false;
+                    }
+                } else if(!addNewEvents) {
+//                    eventViewModel.deleteAll();
+                    events.addAll(eventList);
+                    events.sort((event, t1) -> event.getEventName().compareTo(t1.getEventName()));
+
+                    adapter = new RecyclerViewAdapter(events);
+                    binding.eventList.addItemDecoration(new DividerItemDecoration(EventScreen.this, LinearLayoutManager.VERTICAL));
+                    binding.eventList.setAdapter(adapter);
+                    layoutManager = new LinearLayoutManager(EventScreen.this);
+                    binding.eventList.setLayoutManager(layoutManager);
+                }
+            }
+        });
+
 
         binding.clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,11 +124,7 @@ public class EventScreen extends AppCompatActivity {
             }
         });
 
-        adapter = new RecyclerViewAdapter(events);
-        binding.eventList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        binding.eventList.setAdapter(adapter);
-        layoutManager = new LinearLayoutManager(this);
-        binding.eventList.setLayoutManager(layoutManager);
+
     }
 
     @SuppressWarnings("deprecation")

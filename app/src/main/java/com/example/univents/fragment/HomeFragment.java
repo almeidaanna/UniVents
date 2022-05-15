@@ -31,7 +31,31 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EventScreen.class);
-                intent.putExtra("Category","Cultural");
+                intent.putExtra("Category", 1);
+                startActivity(intent);
+            }
+        });
+        binding.religiousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EventScreen.class);
+                intent.putExtra("Category", 2);
+                startActivity(intent);
+            }
+        });
+        binding.sportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EventScreen.class);
+                intent.putExtra("Category", 3);
+                startActivity(intent);
+            }
+        });
+        binding.educationalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EventScreen.class);
+                intent.putExtra("Category", 4);
                 startActivity(intent);
             }
         });

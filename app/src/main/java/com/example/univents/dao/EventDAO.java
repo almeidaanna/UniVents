@@ -17,6 +17,9 @@ public interface EventDAO {
     @Query("SELECT * FROM event ORDER BY eventName")
     LiveData<List<Event>> getAll();
 
+    @Query("SELECT * FROM event WHERE eventCategoryID = :cID")
+    LiveData<List<Event>> getAllEventsByCategory(int cID);
+
     @Query("SELECT * FROM event WHERE eventId = :eId LIMIT 1")
     Event findByID(int eId);
 
