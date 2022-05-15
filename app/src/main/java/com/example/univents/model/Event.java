@@ -4,10 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Event implements Parcelable {
     private String eventCategory;
+    private int eventCategoryID;
     private String eventName;
     private String eventDate;
     private String eventDay;
@@ -15,9 +17,16 @@ public class Event implements Parcelable {
     private String eventTime;
     private double latitude;
     private double longitude;
+    public static HashMap<String, Integer> categoryType = new HashMap<String, Integer>() {{
+        put("CULTURAL", 1);
+        put("RELIGIOUS", 2);
+        put("SPORT", 3);
+        put("EDUCATIONAL", 4);
+    }};
 
     public Event(String category, String name, String date, String day, String detail, String time,double latitude, double longitude) {
         eventCategory = category;
+        eventCategoryID = categoryType.get(category.toUpperCase());
         eventName = name;
         eventDate = date;
         eventDay = day;
@@ -26,6 +35,8 @@ public class Event implements Parcelable {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+//    public HashMap getCategoryType() { return categoryType; }
 
     public String getEventTime() {
         return eventTime;
@@ -110,6 +121,8 @@ public class Event implements Parcelable {
         return eventDetail;
     }
 
+    public int getEventCategoryID() { return eventCategoryID; }
+
     public void setEventDetail(String detail) {
         eventDetail = detail;
     }
@@ -148,6 +161,15 @@ public class Event implements Parcelable {
         eventList.add(new Event("Educational","Event 2","25/3/2022", "Friday", "This is a Hackathon","7:30 PM", -37.914879, 145.156095)); // -37.914879, 145.156095
         eventList.add(new Event("Educational","Event 3","17/3/2022", "Saturday", "This is a RoboWars","9:30 PM" ,-37.914879, 145.156095)); //-37.914879, 145.156095
 
+        return eventList;
+    }
+
+    public static ArrayList<Event> getUserEventHistory(String userName) {
+        // write code to fetch data from Room/Firebase db.
+        // connect to firebase
+        // fetch event history based on userName(email)
+        ArrayList<Event> eventList = new ArrayList<Event>();
+        // write into a eventList
         return eventList;
     }
 
