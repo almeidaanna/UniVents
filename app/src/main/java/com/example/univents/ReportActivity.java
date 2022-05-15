@@ -1,5 +1,7 @@
 package com.example.univents;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.univents.adapter.HistoryRVAdapter;
@@ -46,6 +49,16 @@ public class ReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+
+        // Customize the back button
+        actionBar.setHomeAsUpIndicator(R.drawable.backbtn);
+
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_report);
 
         barChart = findViewById(R.id.barChartID);
@@ -96,5 +109,16 @@ public class ReportActivity extends AppCompatActivity {
         pieChart.getLegend().setCustom(legendEntries);
         pieChart.getDescription().setEnabled(false);
 
+    }
+    // this event will enable the back
+    // function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
