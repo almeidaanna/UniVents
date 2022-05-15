@@ -30,6 +30,7 @@ public class EventScreen extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter adapter;
     private ArrayList<Event> events;
+    private ArrayList<Event> filteredEvents;
     private DatePicker datePicker;
     private Calendar calendar;
     private TextView dateView;
@@ -64,30 +65,30 @@ public class EventScreen extends AppCompatActivity {
 
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month+1, day);
+        //showDate(year, month+1, day);
+        clearDate();
 
         Intent intent = getIntent();
         String category = intent.getStringExtra("Category");
         events = new ArrayList<Event>();
+        filteredEvents = new ArrayList<Event>();
         //events = Event.createEventList();
         for(Event event : Event.createEventList())
         {
             if (event.getEventCategory().equals(category))
-            {
-//                String[] dateSplit = event.getEventDate().split("/");
-//                int dd = Integer.parseInt(dateSplit[0]);
-//
-//                int mm = Integer.parseInt(dateSplit[1]);
-//
-//                int yyyy = Integer.parseInt(dateSplit[2]);
-//
-//                if (dd == day && mm == month && yyyy == year) {
-//                    Toast.makeText(this,dd+"/"+mm+"/"+yyyy, Toast.LENGTH_SHORT).show();
                     events.add(event);
-                //}
-            }
         }
 
+        binding.clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearDate();
+                binding.clearBtn.setVisibility(View.GONE);
+                adapter = new RecyclerViewAdapter(events);
+                binding.eventList.setAdapter(adapter);
+                binding.eventList.refreshDrawableState();
+            }
+        });
 
         adapter = new RecyclerViewAdapter(events);
         binding.eventList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -116,12 +117,28 @@ public class EventScreen extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
                     showDate(arg1, arg2+1, arg3);
+                    Toast.makeText(EventScreen.this, dateView.getText(), Toast.LENGTH_SHORT).show();
+                    filteredEvents.clear();
+                    binding.clearBtn.setVisibility(View.VISIBLE);
+                    for(Event e : events) {
+                        if (dateView.getText().equals(e.getEventDate()))
+                            filteredEvents.add(e);
+                    }
+                    adapter = new RecyclerViewAdapter(filteredEvents);
+                    binding.eventList.setAdapter(adapter);
+                    binding.eventList.refreshDrawableState();
                 }
             };
 
     private void showDate(int year, int month, int day) {
         dateView.setText(new StringBuilder().append(day).append("/")
                 .append(month).append("/").append(year));
+        dateView.setVisibility(View.VISIBLE);
+    }
+
+    private void clearDate() {
+        dateView.setText("");
+        dateView.setVisibility(View.GONE);
     }
 
     // this event will enable the back
