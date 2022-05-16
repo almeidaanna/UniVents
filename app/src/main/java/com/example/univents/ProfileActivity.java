@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.example.univents.databinding.ActivityProfileBinding;
 import com.example.univents.databinding.FragmentProfileBinding;
+import com.example.univents.model.Event;
 import com.example.univents.model.Student;
+import com.example.univents.viewmodel.EventViewModel;
 import com.example.univents.viewmodel.StudentViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +34,7 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
 
     private StudentViewModel studentViewModel;
+    private EventViewModel eventViewModel;
     private ActivityProfileBinding binding;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -87,26 +90,52 @@ public class ProfileActivity extends AppCompatActivity {
         binding.backupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (Student student : studentViewModel.getAllStudents().getValue())
-                {
-                    Toast.makeText(ProfileActivity.this, ""+studentViewModel.getAllStudents().getValue().size(), Toast.LENGTH_SHORT).show();
-                    db.collection("students")
-                            .add(student)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error adding document", e);
-                                }
-                            });
-                }
+                backUpStudent();
+                backupEvents();
             }
         });
+    }
+
+    private void backupEvents() {
+        for (Event event : eventViewModel.getAllEvents().getValue())
+        {
+            Toast.makeText(ProfileActivity.this, "" + studentViewModel.getAllStudents().getValue().size(), Toast.LENGTH_SHORT).show();
+            db.collection("events")
+                    .add(event)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+        }
+    }
+
+    private void backUpStudent() {
+        for (Student student : studentViewModel.getAllStudents().getValue())
+        {
+            Toast.makeText(ProfileActivity.this, "" + studentViewModel.getAllStudents().getValue().size(), Toast.LENGTH_SHORT).show();
+            db.collection("students")
+                    .add(student)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+        }
     }
 
     @Override
