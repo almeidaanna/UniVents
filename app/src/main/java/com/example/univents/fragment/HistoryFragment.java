@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +24,12 @@ import com.example.univents.databinding.ActivityEventScreenBinding;
 import com.example.univents.databinding.FragmentHistoryBinding;
 import com.example.univents.databinding.RvEventLayoutBinding;
 import com.example.univents.model.Event;
+import com.example.univents.model.Student;
+import com.example.univents.viewmodel.StudentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
@@ -40,15 +46,27 @@ public class HistoryFragment extends Fragment {
         View view = binding.getRoot();
 
         events = new ArrayList<Event>();
-        events = Event.createEventList(); // replace with below function
+        //events = Event.createEventList(); // replace with below function
 //        events = Event.getUserEventHistory(mAuth.getCurrentUser().getEmail());
-        adapter = new HistoryRVAdapter(events);
-        binding.eventList.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        binding.eventList.setAdapter(adapter);
-        layoutManager = new LinearLayoutManager(getContext());
-        binding.eventList.setLayoutManager(layoutManager);
-        String reward = String.valueOf(adapter.getItemCount());
-        binding.rewardText.setText(reward);
+        StudentViewModel studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()).create(StudentViewModel.class);
+        studentViewModel.getAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
+            @Override
+            public void onChanged(List<Student> students) {
+                for(Student student: students){
+                    if(student.getStudentEmailId().equals(mAuth.getCurrentUser().getEmail())){
+                        events = student.getEventHistory();
+                        Toast.makeText(getContext(), ""+events.size(), Toast.LENGTH_SHORT).show();
+                        adapter = new HistoryRVAdapter(events);
+                        binding.eventList.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+                        binding.eventList.setAdapter(adapter);
+                        layoutManager = new LinearLayoutManager(getContext());
+                        binding.eventList.setLayoutManager(layoutManager);
+                        String reward = String.valueOf(adapter.getItemCount());
+                        binding.rewardText.setText(reward);
+                    }
+                }
+            }
+        });
 
         binding.reportsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

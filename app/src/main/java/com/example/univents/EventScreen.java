@@ -24,12 +24,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.univents.adapter.RecyclerViewAdapter;
 import com.example.univents.databinding.ActivityEventScreenBinding;
 import com.example.univents.model.Event;
+import com.example.univents.model.Student;
 import com.example.univents.viewmodel.EventViewModel;
 import com.example.univents.viewmodel.StudentViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class EventScreen extends AppCompatActivity {
 
@@ -44,6 +48,8 @@ public class EventScreen extends AppCompatActivity {
     private int year, month, day;
     private EventViewModel eventViewModel;
     private boolean addNewEvents = false;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +82,14 @@ public class EventScreen extends AppCompatActivity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         //showDate(year, month+1, day);
         clearDate();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         Intent intent = getIntent();
         int category = intent.getIntExtra("Category", 2);
         events = new ArrayList<Event>();
         filteredEvents = new ArrayList<Event>();
+        binding.homeText.setText(Event.categoryTypeByName.get(category));
 
         eventViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(EventViewModel.class);
         eventViewModel.getAllEventsByCategory(category).observe(this, new Observer<List<Event>>() {
@@ -108,6 +117,7 @@ public class EventScreen extends AppCompatActivity {
                     binding.eventList.setAdapter(adapter);
                     layoutManager = new LinearLayoutManager(EventScreen.this);
                     binding.eventList.setLayoutManager(layoutManager);
+
                 }
             }
         });

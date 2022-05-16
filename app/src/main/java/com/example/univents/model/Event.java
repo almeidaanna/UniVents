@@ -3,11 +3,13 @@ package com.example.univents.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 
+import com.example.univents.viewmodel.StudentViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,7 +37,14 @@ public class Event implements Parcelable {
         put("RELIGIOUS", 2);
         put("SPORT", 3);
         put("EDUCATIONAL", 4);
-    }};;
+    }};
+    @Ignore
+    public static final HashMap<Integer, String> categoryTypeByName = new HashMap<Integer, String>() {{
+        put(1, "CULTURAL");
+        put(2, "RELIGIOUS");
+        put(3, "SPORT");
+        put(4, "EDUCATIONAL");
+    }};
 
     public Event(String eventCategory, int eventCategoryID, String eventName, String eventDate, String eventDay, String eventDetail, String eventTime, double latitude, double longitude) {
         this.eventCategory = eventCategory;
@@ -195,7 +204,6 @@ public class Event implements Parcelable {
 
     public static ArrayList<Event> getUserEventHistory(String userName) {
         // write code to fetch data from Room/Firebase db.
-        // connect to firebase
         // fetch event history based on userName(email)
         ArrayList<Event> eventList = new ArrayList<Event>();
         // write into a eventList

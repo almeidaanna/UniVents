@@ -1,21 +1,38 @@
 package com.example.univents;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.univents.databinding.ActivityEventRegisterBinding;
 import com.example.univents.model.Event;
+import com.example.univents.model.Student;
+import com.example.univents.viewmodel.StudentViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 public class EventRegisterActivity extends AppCompatActivity {
     private ActivityEventRegisterBinding binding;
 
+    private StudentViewModel studentViewModel;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +49,11 @@ public class EventRegisterActivity extends AppCompatActivity {
         binding = ActivityEventRegisterBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication()).create(StudentViewModel.class);
+
         Bundle bundle = getIntent().getExtras();
         Event event = bundle.getParcelable("Event");
         binding.eventName.setText(event.getEventName());
@@ -39,13 +61,47 @@ public class EventRegisterActivity extends AppCompatActivity {
         binding.timeText.setText(event.getEventTime());
         binding.dayText.setText(event.getEventDay());
         binding.detailInfo.setText(event.getEventDetail());
+
+        studentViewModel.findByIDFuture(user.getEmail()).thenAccept(new Consumer<Student>() {
+            @Override
+            public void accept(Student student) {
+                for(Event e: student.getEventHistory()){
+                    if( e.getEventId() == event.getEventId()){
+                        binding.registerButton.setText("Already Registed");
+                        binding.registerButton.setEnabled(false);
+                    }
+                }
+            }
+        });
+
         binding.registerButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+
+                studentViewModel.findByIDFuture(user.getEmail()).thenAccept(new Consumer<Student>() {
+                    @Override
+                    public void accept(Student student) {
+                        student.addToHistory(event);
+                        studentViewModel.update(student);
+                    }
+                });
+//                studentViewModel.getAllStudents().observe(EventRegisterActivity.this, new Observer<List<Student>>() {
+//                    @Override
+//                    public void onChanged(List<Student> students) {
+//                        for(Student student1: students){
+//                            if(student1.getStudentEmailId().equals(user.getEmail())){
+//                                student1.addToHistory(event);
+//                                studentViewModel.update(student1);
+//                                break;
+//                            }
+//                        }
+//                    }
+//                });
+
                 Intent intent =  new Intent(getApplicationContext(), EventConfirmActivity.class);
                 intent.putExtra("Event",event.getEventName());
-                startActivity(intent);
-
+                startActivity(intent); //
             }
         });
     }
