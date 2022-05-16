@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 R.id.displayName,
                 R.id.userEmail,
                 R.id.navHome,
-                R.id.navFeed,
                 R.id.navHistory,
                 R.id.navHelp,
                 R.id.navLogout,

@@ -4,12 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/navHome">
-
-    <fragment
-        android:id="@+id/navFeed"
-        android:name="com.example.univents.fragment.FeedFragment"
-        android:label="fragment_feed"
-        tools:layout="@layout/fragment_feed" />
+    
     <fragment
         android:id="@+id/navHelp"
         android:name="com.example.univents.fragment.HelpFragment"

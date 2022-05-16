@@ -17,10 +17,6 @@
             android:icon="@drawable/history"
             android:title="Registration History" />
         <item
-            android:id="@+id/navFeed"
-            android:icon="@drawable/feed"
-            android:title="Feed" />
-        <item
             android:id="@+id/navHelp"
             android:icon="@drawable/help"
             android:title="Help &amp; Support" />
