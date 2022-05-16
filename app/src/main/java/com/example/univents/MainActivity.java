@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-
         user = mAuth.getCurrentUser();
 
         if(user == null){
@@ -60,21 +59,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setSupportActionBar(binding.appBarEventScreen.toolbar);
 
-
-//        studentViewModel.findByIDFuture(user.getEmail()).thenApply(student -> {
-//            currentUser = student;
-//            Toast.makeText(this, student.getStudentEmailId(), Toast.LENGTH_LONG).show();
-//            return student;
-//        });
-    /*    binding.appBarEventScreen.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView; */
         if(user != null) {
             View navHeaderView = binding.navView.getHeaderView(0);
             Menu navMenu = binding.navView.getMenu();
@@ -86,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             });
-            navMenu.getItem(5).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            navMenu.getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     mAuth.signOut();

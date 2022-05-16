@@ -80,7 +80,8 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         binding.deleteBtn.setOnClickListener(view1 -> {
-            studentViewModel.delete(currentUser);
+//            studentViewModel.delete(currentUser);
+            studentViewModel.deleteAll();
             mAuth.getCurrentUser().delete().addOnCompleteListener(runnable -> {
                 Intent intent = new Intent(this, LogInActivity.class);
                 startActivity(intent);
