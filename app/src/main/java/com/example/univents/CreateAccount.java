@@ -21,6 +21,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class CreateAccount extends AppCompatActivity {
     private String userConfirmPassword;
     private String userUniversity;
     private FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StudentViewModel studentViewModel;
 
     private static final String TAG = "CreateAccount";
@@ -47,6 +51,7 @@ public class CreateAccount extends AppCompatActivity {
         // initialise Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
+
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
 
@@ -56,9 +61,16 @@ public class CreateAccount extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-                binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
+        binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+
         List<String> list = new ArrayList<String>();
         list.add("Select University");
         list.add("Monash University");

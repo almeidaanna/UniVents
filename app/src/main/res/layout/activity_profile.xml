@@ -127,11 +127,27 @@
             android:layout_margin="8dp"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/deleteBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FF0000"
-        android:text="Delete Account" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="#FF0000"
+            android:text="Delete Account" />
+
+        <Button
+            android:id="@+id/backupBtn"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#102372"
+            android:text="Backup"/>
+    </LinearLayout>
+
 
 </LinearLayout>
