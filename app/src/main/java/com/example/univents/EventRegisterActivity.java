@@ -67,7 +67,7 @@ public class EventRegisterActivity extends AppCompatActivity {
             public void accept(Student student) {
                 for (Event e : student.getEventHistory()) {
                     if (e.getEventId() == event.getEventId()) {
-                        binding.registerButton.setText("Already Registed");
+                        binding.registerButton.setText("Already Registered");
                         binding.registerButton.setEnabled(false);
                     }
                 }
