@@ -21,6 +21,8 @@ import com.mapbox.maps.Style;
 import com.mapbox.maps.ViewAnnotationOptions;
 
 import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class EventConfirmActivity extends AppCompatActivity {
     private ActivityEventConfirmBinding binding;
@@ -67,16 +69,25 @@ public class EventConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String[] date = eDate.split("/");
-                Date start = Date.newBuilder()
-                        .setDay(Integer.parseInt(date[0]))
-                        .setMonth(Integer.parseInt(date[1]))
-                        .setYear(Integer.parseInt(date[2]))
-                        .build();
+                String[] time = eTime.split(" ");
+                String[] aTime = time[0].split(":");
+
+                if(time[1].toLowerCase().equals("pm")) {
+                    int newHour = (Integer.parseInt(aTime[0]) + 12);
+                    aTime[0] = newHour + "";
+                }
+
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]), Integer.parseInt(aTime[0]), Integer.parseInt(aTime[1]));
+
+                Calendar endTime = Calendar.getInstance();
+                endTime.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]), Integer.parseInt(aTime[0]) + 1, Integer.parseInt(aTime[1]));
+
                 Intent i = new Intent(Intent.ACTION_EDIT);
                 i.setType("vnd.android.cursor.item/event");
-                i.putExtra("beginTime", start.toString());
-                i.putExtra("allDay", true);
-                i.putExtra("endTime", start.toString());
+                i.putExtra("beginTime", beginTime.getTimeInMillis());
+                i.putExtra("allDay", false);
+                i.putExtra("endTime", endTime.getTimeInMillis());
                 i.putExtra("title", eName + "-" + eDetail + " (" + eCategory + ")");
                 i.putExtra("description", eDetail);
                 startActivity(i);
