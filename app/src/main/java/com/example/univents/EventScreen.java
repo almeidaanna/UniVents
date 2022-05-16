@@ -133,8 +133,6 @@ public class EventScreen extends AppCompatActivity {
                 binding.eventList.refreshDrawableState();
             }
         });
-
-
     }
 
     @SuppressWarnings("deprecation")
