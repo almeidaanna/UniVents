@@ -88,7 +88,13 @@ public class EventRegisterActivity extends AppCompatActivity {
                 });
 
                 Intent intent = new Intent(getApplicationContext(), EventConfirmActivity.class);
-                intent.putExtra("Event", event.getEventName());
+                intent.putExtra("eName", event.getEventName());
+                intent.putExtra("eDay", event.getEventDay());
+                intent.putExtra("eDate", event.getEventDate());
+                intent.putExtra("eDetail", event.getEventDetail());
+                intent.putExtra("eCategory", event.getEventCategory());
+                intent.putExtra("eTime", event.getEventTime());
+                intent.putExtra("eId", event.getEventId());
                 intent.putExtra("lat", event.getLatitude());
                 intent.putExtra("lng", event.getLongitude());
                 startActivity(intent); //

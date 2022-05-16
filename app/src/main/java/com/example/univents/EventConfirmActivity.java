@@ -6,25 +6,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.univents.databinding.ActivityEventConfirmBinding;
+import com.google.type.Date;
+import com.google.type.DateTime;
 import com.mapbox.geojson.Point;
 import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.ViewAnnotationOptions;
-import com.mapbox.maps.plugin.annotation.Annotation;
-import com.mapbox.maps.plugin.annotation.AnnotationManager;
-import com.mapbox.maps.plugin.annotation.AnnotationPlugin;
-import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl;
-import com.mapbox.maps.plugin.annotation.AnnotationType;
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotation;
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions;
+
+import java.text.DateFormat;
 
 public class EventConfirmActivity extends AppCompatActivity {
     private ActivityEventConfirmBinding binding;
@@ -48,7 +44,14 @@ public class EventConfirmActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         Intent intent = getIntent();
-        binding.eventName.setText(intent.getStringExtra("Event"));
+        String eName = intent.getStringExtra("eName");
+        String eDate = intent.getStringExtra("eDate");
+        String eDetail = intent.getStringExtra("eDetail");
+        String eCategory = intent.getStringExtra("eCategory");
+        String eId = intent.getStringExtra("eId");
+        String eTime = intent.getStringExtra("eTime");
+
+        binding.eventName.setText(eName);
         //from event db get lat and log
         final Point point = Point.fromLngLat(intent.getDoubleExtra("lng", 145.045837), intent.getDoubleExtra("lat", -37.876823));
         mapView = findViewById(R.id.mapView);
@@ -63,6 +66,20 @@ public class EventConfirmActivity extends AppCompatActivity {
         binding.calendarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String[] date = eDate.split("/");
+                Date start = Date.newBuilder()
+                        .setDay(Integer.parseInt(date[0]))
+                        .setMonth(Integer.parseInt(date[1]))
+                        .setYear(Integer.parseInt(date[2]))
+                        .build();
+                Intent i = new Intent(Intent.ACTION_EDIT);
+                i.setType("vnd.android.cursor.item/event");
+                i.putExtra("beginTime", start.toString());
+                i.putExtra("allDay", true);
+                i.putExtra("endTime", start.toString());
+                i.putExtra("title", eName + "-" + eDetail + " (" + eCategory + ")");
+                i.putExtra("description", eDetail);
+                startActivity(i);
                 Toast.makeText(view.getContext(), "Added to calendar", Toast.LENGTH_SHORT).show();
             }
         });
