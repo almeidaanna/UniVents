@@ -12,7 +12,7 @@
         android:padding="16dp"
         android:layout_margin="16dp"
         android:textSize="20dp"
-        android:text="@string/helpFragment"
+        android:text="This app is a way to provide students with the a chance to kick back and relax from their busy schedules. UniVents provides students with a wide range of events that they can choose from. They have a choice between Cultural, Sports, Religious or Educational. Its a one stop shop for all kinds of events that are held at their university to provide them with an entire university experience."
         android:justificationMode="inter_word"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

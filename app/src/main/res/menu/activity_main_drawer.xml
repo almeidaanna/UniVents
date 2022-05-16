@@ -19,7 +19,7 @@
         <item
             android:id="@+id/navHelp"
             android:icon="@drawable/help"
-            android:title="Help &amp; Support" />
+            android:title="About" />
         <item
             android:id="@+id/navLogout"
             android:icon="@drawable/power_off"
