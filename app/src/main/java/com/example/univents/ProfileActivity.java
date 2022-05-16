@@ -133,8 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 backUpStudent();
-
-                // backupEvents();
+                backupEvents();
             }
         });
     }

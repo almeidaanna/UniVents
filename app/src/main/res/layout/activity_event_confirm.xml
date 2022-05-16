@@ -22,13 +22,29 @@
         android:layout_height="120dp"
         android:src="@drawable/eventicon"
         android:layout_gravity="center" />
-    <Button
-        android:id="@+id/calendarBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add to Google Calendar"
-        android:layout_gravity="center"
-        android:layout_margin="5dp" />
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/calendarBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to Google Calendar"
+            android:layout_gravity="center"/>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/sharBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/purple_500"
+            android:textColor="@color/white"
+            app:icon="@drawable/share"
+            app:iconTint="@color/white"
+            android:text="Share"
+            android:layout_gravity="center"
+            android:layout_marginLeft="25dp" />
+    </LinearLayout>
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
