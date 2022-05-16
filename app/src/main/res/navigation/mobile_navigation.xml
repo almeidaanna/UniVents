@@ -8,17 +8,17 @@
     <fragment
         android:id="@+id/navHelp"
         android:name="com.example.univents.fragment.HelpFragment"
-        android:label="Help &amp; Support"
+        android:label="About"
         tools:layout="@layout/fragment_help" />
     <fragment
         android:id="@+id/navHistory"
         android:name="com.example.univents.fragment.HistoryFragment"
-        android:label="fragment_history"
+        android:label="Registration History"
         tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/navHome"
         android:name="com.example.univents.fragment.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
 <!--    <fragment-->
 <!--        android:id="@+id/navLogout"-->
