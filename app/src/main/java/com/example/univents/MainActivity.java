@@ -60,14 +60,13 @@ public class MainActivity extends AppCompatActivity {
         if (user == null) {
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
-        }
+        } else {
+            binding = ActivityMainBinding.inflate(getLayoutInflater());
+            View view = binding.getRoot();
+            setContentView(view);
+            setSupportActionBar(binding.appBarEventScreen.toolbar);
+            studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(StudentViewModel.class);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
-        setSupportActionBar(binding.appBarEventScreen.toolbar);
-
-        if (user != null) {
             View navHeaderView = binding.navView.getHeaderView(0);
             Menu navMenu = binding.navView.getMenu();
             navMenu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -92,55 +91,25 @@ public class MainActivity extends AppCompatActivity {
             displayName.setText(user.getEmail()); // need to fetch from firebase db and replace
             userEmail.setText(user.getEmail());
 
-            studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(StudentViewModel.class);
-            studentViewModel.findByIDFuture(user.getEmail()).thenAccept(student -> {
-                Toast.makeText(this, "please remove me", Toast.LENGTH_SHORT).show();
-                @SuppressLint("RestrictedApi") Data studentData = new Data.Builder()
-                        .putString("studentFname", student.getStudentFname())
-                        .putString("studentLname", student.getStudentLname())
-                        .putString("studentPhno", student.getStudentPhno())
-                        .putString("studentEmailID", student.getStudentEmailId())
-                        .putString("studentPassword", student.getStudentPassword())
-                        .putString("studentUniversity", student.getStudentUniversity())
-                        .build();
-                // .put("eventHistory", student.getEventHistory())
-                PeriodicWorkRequest periodicUploadWorkRequest =
-                        new PeriodicWorkRequest.Builder(UploadWorker.class, 900000 , TimeUnit.MILLISECONDS)
-                                .setInputData(new Data.Builder()
-                                        .putAll(studentData)
-                                        .build())
-                                .build();
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.imageView,
+                    R.id.displayName,
+                    R.id.userEmail,
+                    R.id.navHome,
+                    R.id.navHistory,
+                    R.id.navHelp,
+                    R.id.navLogout,
+                    R.id.navProfile)
+                    .setOpenableLayout(binding.drawerLayout)
+                    .build();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            NavHostFragment navHostFragment = (NavHostFragment) fragmentManager.findFragmentById((R.id.nav_host_fragment_content_event_screen));
 
-                WorkRequest uploadWorkRequest =
-                        new OneTimeWorkRequest.Builder(UploadWorker.class)
-                                .setInputData(new Data.Builder()
-                                        .putAll(studentData)
-                                        .build())
-                                .build();
-                WorkManager
-                        .getInstance(this)
-                        .enqueue(periodicUploadWorkRequest);
-            });
+            NavController navController = navHostFragment.getNavController();
+            NavigationUI.setupWithNavController(binding.navView, navController);
+            NavigationUI.setupWithNavController(binding.appBarEventScreen.toolbar, navController, mAppBarConfiguration);
         }
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.imageView,
-                R.id.displayName,
-                R.id.userEmail,
-                R.id.navHome,
-                R.id.navHistory,
-                R.id.navHelp,
-                R.id.navLogout,
-                R.id.navProfile)
-                .setOpenableLayout(binding.drawerLayout)
-                .build();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        NavHostFragment navHostFragment = (NavHostFragment) fragmentManager.findFragmentById((R.id.nav_host_fragment_content_event_screen));
-
-        NavController navController = navHostFragment.getNavController();
-        NavigationUI.setupWithNavController(binding.navView, navController);
-        NavigationUI.setupWithNavController(binding.appBarEventScreen.toolbar, navController, mAppBarConfiguration);
     }
 }
