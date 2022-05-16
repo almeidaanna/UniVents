@@ -89,7 +89,12 @@ public class EventScreen extends AppCompatActivity {
         int category = intent.getIntExtra("Category", 2);
         events = new ArrayList<Event>();
         filteredEvents = new ArrayList<Event>();
-        binding.homeText.setText(Event.categoryTypeByName.get(category));
+        switch (category){
+            case 1: binding.homeText.setText("Cultural"); break;
+            case 2:binding.homeText.setText("Religious"); break;
+            case 3:binding.homeText.setText("Sport"); break;
+            case 4:binding.homeText.setText("Educational"); break;
+        }
 
         eventViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(EventViewModel.class);
         eventViewModel.getAllEventsByCategory(category).observe(this, new Observer<List<Event>>() {

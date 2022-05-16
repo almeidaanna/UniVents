@@ -38,13 +38,6 @@ public class Event implements Parcelable {
         put("SPORT", 3);
         put("EDUCATIONAL", 4);
     }};
-    @Ignore
-    public static final HashMap<Integer, String> categoryTypeByName = new HashMap<Integer, String>() {{
-        put(1, "CULTURAL");
-        put(2, "RELIGIOUS");
-        put(3, "SPORT");
-        put(4, "EDUCATIONAL");
-    }};
 
     public Event(String eventCategory, int eventCategoryID, String eventName, String eventDate, String eventDay, String eventDetail, String eventTime, double latitude, double longitude) {
         this.eventCategory = eventCategory;

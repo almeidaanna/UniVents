@@ -1,5 +1,7 @@
 package com.example.univents;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +19,15 @@ import com.example.univents.databinding.ActivityCreateAccountBinding;
 import com.example.univents.model.Student;
 import com.example.univents.viewmodel.StudentViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -141,6 +146,8 @@ public class CreateAccount extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
                     studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(StudentViewModel.class);
                     studentViewModel.insert(student);
+                    backUpStudent(student);
+
                     updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.
@@ -151,6 +158,26 @@ public class CreateAccount extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void backUpStudent(Student student) {
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase.child("students").child(student.getStudentEmailId().replace(".","")).setValue(student);
+        db.collection("students")
+                .document(student.getStudentEmailId())
+                .set(student)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + student.getStudentEmailId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     private void updateUI(FirebaseUser user) {

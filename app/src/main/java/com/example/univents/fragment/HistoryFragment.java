@@ -27,6 +27,8 @@ import com.example.univents.model.Event;
 import com.example.univents.model.Student;
 import com.example.univents.viewmodel.StudentViewModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,32 +40,48 @@ public class HistoryFragment extends Fragment {
     private HistoryRVAdapter adapter;
     private ArrayList<Event> events;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseFirestore db;
+    private StudentViewModel studentViewModel;
+    private ArrayList<Event> mEventHistory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
-        mAuth = FirebaseAuth.getInstance();
         View view = binding.getRoot();
 
+        studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()).create(StudentViewModel.class);
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+
         events = new ArrayList<Event>();
-        //events = Event.createEventList(); // replace with below function
-//        events = Event.getUserEventHistory(mAuth.getCurrentUser().getEmail());
-        StudentViewModel studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()).create(StudentViewModel.class);
-        studentViewModel.getAllStudents().observe(getViewLifecycleOwner(), new Observer<List<Student>>() {
-            @Override
-            public void onChanged(List<Student> students) {
-                for(Student student: students){
-                    if(student.getStudentEmailId().equals(mAuth.getCurrentUser().getEmail())){
-                        events = student.getEventHistory();
-                        Toast.makeText(getContext(), ""+events.size(), Toast.LENGTH_SHORT).show();
-                        adapter = new HistoryRVAdapter(events);
-                        binding.eventList.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-                        binding.eventList.setAdapter(adapter);
-                        layoutManager = new LinearLayoutManager(getContext());
-                        binding.eventList.setLayoutManager(layoutManager);
-                        String reward = String.valueOf(adapter.getItemCount());
-                        binding.rewardText.setText(reward);
+        mEventHistory = new ArrayList<Event>();
+
+        studentViewModel.getAllStudents().observe(getViewLifecycleOwner(), students -> {
+            db.collection("students").document(user.getEmail()).get().onSuccessTask(documentSnapshot -> {
+                mEventHistory = (ArrayList<Event>) documentSnapshot.get("eventHistory");
+                for (Student student : students) {
+                    if (student.getStudentEmailId().equals(user.getEmail())) {
+                        student.setEventHistory(mEventHistory);
+                        Toast.makeText(getContext(), "" + events.size(), Toast.LENGTH_SHORT).show();
                     }
+                }
+                return null;
+            });
+            for (Student student : students) {
+                if (student.getStudentEmailId().equals(user.getEmail())) {
+                    events.clear();
+                    events.addAll(student.getEventHistory());
+
+                    adapter = new HistoryRVAdapter(events);
+                    binding.eventList.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+                    binding.eventList.setAdapter(adapter);
+                    layoutManager = new LinearLayoutManager(getContext());
+                    binding.eventList.setLayoutManager(layoutManager);
+                    String reward = String.valueOf(adapter.getItemCount());
+                    binding.rewardText.setText(reward);
+                    view.refreshDrawableState();
                 }
             }
         });

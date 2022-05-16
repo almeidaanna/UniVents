@@ -86,18 +86,6 @@ public class EventRegisterActivity extends AppCompatActivity {
                         studentViewModel.update(student);
                     }
                 });
-//                studentViewModel.getAllStudents().observe(EventRegisterActivity.this, new Observer<List<Student>>() {
-//                    @Override
-//                    public void onChanged(List<Student> students) {
-//                        for(Student student1: students){
-//                            if(student1.getStudentEmailId().equals(user.getEmail())){
-//                                student1.addToHistory(event);
-//                                studentViewModel.update(student1);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                });
 
                 Intent intent =  new Intent(getApplicationContext(), EventConfirmActivity.class);
                 intent.putExtra("Event",event.getEventName());
