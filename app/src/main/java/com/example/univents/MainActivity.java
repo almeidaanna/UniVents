@@ -10,7 +10,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,12 +32,14 @@ import com.example.univents.databinding.ActivityEventScreenBinding;
 import com.example.univents.databinding.ActivityMainBinding;
 import com.example.univents.model.Student;
 import com.example.univents.viewmodel.StudentViewModel;
+import com.example.univents.worker.UploadWorker;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        if(user == null){
+        if (user == null) {
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
         }
@@ -59,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         setSupportActionBar(binding.appBarEventScreen.toolbar);
 
-        if(user != null) {
+        if (user != null) {
             View navHeaderView = binding.navView.getHeaderView(0);
             Menu navMenu = binding.navView.getMenu();
             navMenu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -83,6 +91,36 @@ public class MainActivity extends AppCompatActivity {
             TextView userEmail = navHeaderView.findViewById(R.id.userEmail);
             displayName.setText(user.getEmail()); // need to fetch from firebase db and replace
             userEmail.setText(user.getEmail());
+
+            studentViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(StudentViewModel.class);
+            studentViewModel.findByIDFuture(user.getEmail()).thenAccept(student -> {
+                Toast.makeText(this, "please remove me", Toast.LENGTH_SHORT).show();
+                @SuppressLint("RestrictedApi") Data studentData = new Data.Builder()
+                        .putString("studentFname", student.getStudentFname())
+                        .putString("studentLname", student.getStudentLname())
+                        .putString("studentPhno", student.getStudentPhno())
+                        .putString("studentEmailID", student.getStudentEmailId())
+                        .putString("studentPassword", student.getStudentPassword())
+                        .putString("studentUniversity", student.getStudentUniversity())
+                        .build();
+                // .put("eventHistory", student.getEventHistory())
+                PeriodicWorkRequest periodicUploadWorkRequest =
+                        new PeriodicWorkRequest.Builder(UploadWorker.class, 900000 , TimeUnit.MILLISECONDS)
+                                .setInputData(new Data.Builder()
+                                        .putAll(studentData)
+                                        .build())
+                                .build();
+
+                WorkRequest uploadWorkRequest =
+                        new OneTimeWorkRequest.Builder(UploadWorker.class)
+                                .setInputData(new Data.Builder()
+                                        .putAll(studentData)
+                                        .build())
+                                .build();
+                WorkManager
+                        .getInstance(this)
+                        .enqueue(periodicUploadWorkRequest);
+            });
         }
 
         // Passing each menu ID as a set of Ids because each

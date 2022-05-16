@@ -65,8 +65,8 @@ public class EventRegisterActivity extends AppCompatActivity {
         studentViewModel.findByIDFuture(user.getEmail()).thenAccept(new Consumer<Student>() {
             @Override
             public void accept(Student student) {
-                for(Event e: student.getEventHistory()){
-                    if( e.getEventId() == event.getEventId()){
+                for (Event e : student.getEventHistory()) {
+                    if (e.getEventId() == event.getEventId()) {
                         binding.registerButton.setText("Already Registed");
                         binding.registerButton.setEnabled(false);
                     }
@@ -87,8 +87,10 @@ public class EventRegisterActivity extends AppCompatActivity {
                     }
                 });
 
-                Intent intent =  new Intent(getApplicationContext(), EventConfirmActivity.class);
-                intent.putExtra("Event",event.getEventName());
+                Intent intent = new Intent(getApplicationContext(), EventConfirmActivity.class);
+                intent.putExtra("Event", event.getEventName());
+                intent.putExtra("lat", event.getLatitude());
+                intent.putExtra("lng", event.getLongitude());
                 startActivity(intent); //
             }
         });
