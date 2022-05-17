@@ -90,7 +90,7 @@ public class EventScreen extends AppCompatActivity {
         events = new ArrayList<Event>();
         filteredEvents = new ArrayList<Event>();
         switch (category){
-            case 1: binding.homeText.setText("Cultural"); break;
+            case 1:binding.homeText.setText("Cultural"); break;
             case 2:binding.homeText.setText("Religious"); break;
             case 3:binding.homeText.setText("Sport"); break;
             case 4:binding.homeText.setText("Educational"); break;

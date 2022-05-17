@@ -30,7 +30,9 @@ import android.widget.Toast;
 
 import com.example.univents.databinding.ActivityEventScreenBinding;
 import com.example.univents.databinding.ActivityMainBinding;
+import com.example.univents.model.Event;
 import com.example.univents.model.Student;
+import com.example.univents.viewmodel.EventViewModel;
 import com.example.univents.viewmodel.StudentViewModel;
 import com.example.univents.worker.UploadWorker;
 import com.google.android.material.navigation.NavigationView;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private StudentViewModel studentViewModel;
+    private EventViewModel eventViewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -57,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
+//        eventViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(EventViewModel.class);
+//        for (Event e : Event.createEventList())
+//        {
+//            eventViewModel.insert(e);
+//        }
         if (user == null) {
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
